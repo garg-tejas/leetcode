@@ -1,27 +1,23 @@
 class Solution {
 public:
-    bool canBeValid(string s, string locked) {
-        int openCount = 0;
-        int n = s.length();
-        if (n % 2)
-            return false;
-        for (int i = 0; i < n; i++) {
-            if (s[i] == '(' || locked[i] == '0')
-                openCount++;
-            else
-                openCount--;
-            if (openCount < 0)
-                return false;
+    bool canBeValid(string s, string lock) {
+        stack<int> locked;
+        stack<int> unlocked;
+        int n=s.length();
+        if(n%2) return false;
+        for(int i=0;i<n;i++){
+            if(lock[i]=='1' && s[i]=='(') locked.push(i);
+            else if(lock[i]=='0') unlocked.push(i);
+            else{
+                if(!locked.empty()) locked.pop();
+                else if(!unlocked.empty()) unlocked.pop();
+                else return false;
+            }
         }
-        int closeCount = 0;
-        for (int i = n - 1; i >= 0; i--) {
-            if (s[i] == ')' || locked[i] == '0')
-                closeCount++;
-            else
-                closeCount--;
-            if (closeCount < 0)
-                return false;
+        while(!locked.empty() && !unlocked.empty() && locked.top()<unlocked.top()){
+            locked.pop();
+            unlocked.pop();
         }
-        return true;
+        return locked.empty();
     }
 };
