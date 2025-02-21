@@ -1,19 +1,19 @@
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        int left = 0, right = 1, width = 1;
+        int left = 0, right = height.size() - 1;
         int maxVolume = 0;
         int n = height.size();
-        for (int i = 0; i < n - 1; i++) {
-            if (left <= height[i]) {
-                left = height[i];
-                for (int j = i + 1; j < n; j++) {
-                    width = j - i;
-                    int volume = min(left, height[j]) * width;
-                    maxVolume=max(volume,maxVolume);
-                }
+        while (left <= right) {
+            maxVolume = max(maxVolume,
+                            min(height[left], height[right]) * (right - left));
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
             }
         }
+
         return maxVolume;
     }
 };
