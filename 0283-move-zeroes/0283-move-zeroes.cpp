@@ -8,9 +8,12 @@ public:
                 zeroPointer++;
             while (nonZeroPointer < n && nums[nonZeroPointer] == 0)
                 nonZeroPointer++;
-            if (nonZeroPointer < n && zeroPointer < n) {
+            if (nonZeroPointer < n && zeroPointer < n && zeroPointer < nonZeroPointer) {
                 nums[zeroPointer] = nums[nonZeroPointer];
                 nums[nonZeroPointer] = 0;
+            }
+            else if(zeroPointer > nonZeroPointer){
+                nonZeroPointer = zeroPointer;
             }
         }
     }
